@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { newGames } from "../actions";
 
 class Header extends Component {
   renderContent() {
@@ -24,7 +25,10 @@ class Header extends Component {
         return (
           <ul class="right hide-on-med-and-down">
             <li>
-              <a class="waves-effect waves-light btn" href="/api/game/new">
+              <a
+                class="waves-effect waves-light btn"
+                onClick={this.props.onSubmit}
+              >
                 New Game
               </a>
             </li>
@@ -66,4 +70,13 @@ function mapStateToProps(state) {
   return { auth: state.auth };
 }
 
-export default connect(mapStateToProps)(Header);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onSubmit: () => {
+      const href = "/game";
+      dispatch(newGames());
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
